@@ -2,7 +2,6 @@ use sysinfo::{
     System,
 };
 
-use std::collections::HashMap;
 use std::process::{Command};
 
 const SCRAP_TEMPLATE: &str = r#"
