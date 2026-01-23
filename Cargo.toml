@@ -2,7 +2,15 @@
 name = "scrapfetch-rs"
 version = "0.1.0-beta"
 edition = "2024"
+license = "BSD3"
+description = "Small system info splash"
+homepage = "https://github.com/egevtech/scrapfetch-rs"
 
 [dependencies]
 strfmt = "0.2.5"
 sysinfo = "0.37.2"
+
+[package.metadata.generate-rpm]
+assets = [
+	{ source = "target/release/scrapfetch-rs", dest = "/usr/bin/scrapfetch-rs", mode = "755"}
+]
