@@ -1,10 +1,13 @@
 [package]
 name = "scrapfetch-rs"
-version = "0.1.2-beta"
+version = "0.1.3"
 edition = "2024"
 license = "BSD3"
 description = "Small system info splash"
 homepage = "https://github.com/egevtech/scrapfetch-rs"
+authors = ["Egevtech"]
+readme = "README.md"
+repository = "https://github.com/egevtech/scrapfetch-rs"
 
 [dependencies]
 strfmt = "0.2.5"
@@ -14,3 +17,8 @@ sysinfo = "0.37.2"
 assets = [
 	{ source = "target/release/scrapfetch-rs", dest = "/usr/bin/scrapfetch-rs", mode = "755"}
 ]
+
+[package.metadata.archlinux_pkgbuild]
+arch = ["any"]
+makedepends = ["cargo", "rustup"]
+
