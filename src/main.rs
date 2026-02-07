@@ -4,8 +4,10 @@ use sysinfo::{
 
 use std::process::{Command};
 
+use users::get_current_username;
+
 const SCRAP_TEMPLATE: &str = r#"
-@@@@@@@@@::.....:@@@    {hostname}
+@@@@@@@@@::.....:@@@    {username}@{hostname}
 @: :..... ......:@@@    =========
 :  ....:-===++++@@@@    OS - {sysname}
 :. .=++++++++===::@@    Kernel - {kernel}
@@ -27,6 +29,8 @@ fn main() {
 
     system.refresh_all();
 
+    let username: String = if let Some(t) = get_current_username() { t.into_string().unwrap() } else { String::from("") };
+
     let hostname = System::host_name().unwrap();
     let sysname = System::name().unwrap();
     let kernel = System::kernel_long_version();
@@ -36,7 +40,7 @@ fn main() {
     let swap_total = system.total_swap() / (1024 * 1024);
     let scrap_status = if output.status.code().unwrap() != 0 { "not installed".to_string() } else { "installed".to_string() };
 
-    let formatted = strfmt::strfmt!(SCRAP_TEMPLATE, hostname, sysname.clone(), kernel, mem_use, mem_total, swap_use, swap_total, scrap_status, sysname);
+    let formatted = strfmt::strfmt!(SCRAP_TEMPLATE, username, hostname, sysname.clone(), kernel, mem_use, mem_total, swap_use, swap_total, scrap_status, sysname);
 
     println!("{}", formatted.unwrap());
 }
