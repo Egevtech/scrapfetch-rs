@@ -6,19 +6,6 @@ use std::process::{Command};
 
 use users::get_current_username;
 
-const SCRAP_TEMPLATE: &str = r#"
-@@@@@@@@@::.....:@@@    {username}@{hostname}
-@: :..... ......:@@@    =========
-:  ....:-===++++@@@@    OS - {sysname}
-:. .=++++++++===::@@    Kernel - {kernel}
-@.  :+===-..... ..:@
-@ .. .....:-==+:  .@    Mem - {mem_use}/{mem_total} MB
-@@..====+++++++=. .:    Swap - {swap_use}/{swap_total} MB
-@@@@++=+==--:.... .:
-@@@::..... ......:@@    Scrap is {scrap_status} on your {sysname}
-@@@:... ..:@@@@@@@@@
-"#;
-
 fn main() {
     let mut system = System::new_all();
 
@@ -30,7 +17,6 @@ fn main() {
     system.refresh_all();
 
     let username: String = if let Some(t) = get_current_username() { t.into_string().unwrap() } else { String::from("") };
-
     let hostname = System::host_name().unwrap();
     let sysname = System::name().unwrap();
     let kernel = System::kernel_long_version();
@@ -40,7 +26,14 @@ fn main() {
     let swap_total = system.total_swap() / (1024 * 1024);
     let scrap_status = if output.status.code().unwrap() != 0 { "not installed".to_string() } else { "installed".to_string() };
 
-    let formatted = strfmt::strfmt!(SCRAP_TEMPLATE, username, hostname, sysname.clone(), kernel, mem_use, mem_total, swap_use, swap_total, scrap_status, sysname);
-
-    println!("{}", formatted.unwrap());
+    println!("@@@@@@@@@::.....:@@@    {username}@{hostname}");
+    println!("@: :..... ......:@@@    {}", vec!["="; format!("{username}@{hostname}").len()].join(""));
+    println!(":  ....:-===++++@@@@    OS - {sysname}");
+    println!(":. .=++++++++===::@@    Kernel - {kernel}");
+    println!("@.  :+===-..... ..:@");
+    println!("@ .. .....:-==+:  .@    Mem - {mem_use}/{mem_total} MB");
+    println!("@@..====+++++++=. .:    Swap - {swap_use}/{swap_total} MB");
+    println!("@@@@++=+==--:.... .:");
+    println!("@@@::..... ......:@@    Scrap is {scrap_status} on your {sysname}");
+    println!("@@@:... ..:@@@@@@@@@");
 }
