@@ -1,9 +1,5 @@
-use sysinfo::{
-    System,
-};
-
+use sysinfo::System;
 use std::process::{Command};
-
 use users::get_current_username;
 
 fn main() {
