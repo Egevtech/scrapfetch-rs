@@ -19,6 +19,9 @@ assets = [
 	{ source = "target/release/scrapfetch-rs", dest = "/usr/bin/scrapfetch-rs", mode = "755"}
 ]
 
+[package.metadata.generate-rpm.requires]
+which = "*"
+
 [package.metadata.aur]
 arch = ["any"]
 makedepends = ["cargo", "rustup"]
