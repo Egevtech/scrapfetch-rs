@@ -1,6 +1,6 @@
 [package]
 name = "scrapfetch-rs"
-version = "0.1.4"
+version = "0.1.5"
 edition = "2024"
 license = "BSD3"
 description = "Small system info splash"
@@ -19,7 +19,7 @@ assets = [
 	{ source = "target/release/scrapfetch-rs", dest = "/usr/bin/scrapfetch-rs", mode = "755"}
 ]
 
-[package.metadata.archlinux_pkgbuild]
+[package.metadata.aur]
 arch = ["any"]
 makedepends = ["cargo", "rustup"]
-
+depends = ["which"]
